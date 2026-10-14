@@ -3,6 +3,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { phpFiles, installationGuide, type CodeFile } from './data/phpFiles';
 import { zipFiles } from './data/zipContents';
+import CPanelGuide from './CPanelGuide';
 
 // ============================================
 // DOWNLOAD ZIP COMPONENT
@@ -371,7 +372,7 @@ function ArchitectureTab() {
 // ============================================
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'download' | 'files' | 'architecture' | 'install'>('download');
+  const [activeTab, setActiveTab] = useState<'download' | 'guide' | 'files' | 'architecture' | 'install'>('download');
   const [activeFileId, setActiveFileId] = useState<string>(phpFiles[0].id);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -420,6 +421,7 @@ export default function App() {
           <nav className="flex gap-1 overflow-x-auto py-2">
             {[
               { id: 'download' as const, label: '⬇️ Download ZIP', highlight: true },
+              { id: 'guide' as const, label: '📖 Panduan cPanel', highlight: false },
               { id: 'files' as const, label: '📁 Source Code', count: phpFiles.length },
               { id: 'architecture' as const, label: '🏗️ Arsitektur' },
               { id: 'install' as const, label: '📋 Instalasi' },
@@ -456,6 +458,7 @@ export default function App() {
             <DownloadZipSection />
           </div>
         )}
+        {activeTab === 'guide' && <CPanelGuide />}
         {activeTab === 'architecture' && <ArchitectureTab />}
         {activeTab === 'install' && <InstallationTab />}
         {activeTab === 'files' && (
